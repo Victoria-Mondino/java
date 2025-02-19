@@ -5,20 +5,18 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "PRODUCTOS")
+@Table(name = "producto")
 public class Producto {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "descripcion", length = 100, nullable = false)
-    private String descripcion;
+    @Column(nullable = false)
+    private String nombre;
 
-    @Column(name = "precio", nullable = false)
-    private Double precio;
+    @Column(nullable = false)
+    private double precio;
 
-    @Column(name = "stock", nullable = false)
-    private Integer stock;
+    @Column(nullable = false)
+    private int stock;
 }

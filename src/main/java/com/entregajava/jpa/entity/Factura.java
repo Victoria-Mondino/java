@@ -1,27 +1,32 @@
 package com.entregajava.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "FACTURAS")
+@Table(name = "factura")
 public class Factura {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_factura")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "fecha", nullable = false)
-    private LocalDate fecha;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonIgnore
+    private Cliente cliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cliente", nullable = false)
-    private Cliente cliente;  // Corregido: Cliente en lugar de Client
+    @Column(nullable = false)
+    private Date fecha;
 
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetalleFactura> detalles;  // Simplificado
+    @Column(nullable = false)
+    private double total;
+
+    // Factura.java
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    @JsonIgnore // Evita serialización cíclica
+    private List<DetalleFactura> detalles;
 }

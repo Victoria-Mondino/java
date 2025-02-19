@@ -1,25 +1,24 @@
+// Cliente.java
 package com.entregajava.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "CLIENTES")
+@Table(name = "cliente")
 public class Cliente {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
-    private Integer id;
+    @JsonProperty("id")
+    private Long id;
 
-    @Column(name = "nombre", length = 100, nullable = false)
+    @Column(name = "nombre", nullable = false)
+    @JsonProperty("nombre")
     private String nombre;
 
-    @Column(name = "direccion", length = 200)
-    private String direccion;
-
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Factura> facturas;
+    @Column(name = "email", unique = true, nullable = false)
+    @JsonProperty("email")
+    private String email;
 }
